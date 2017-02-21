@@ -1,11 +1,9 @@
 require "./assemble"
 
 run = Assemble.current_run
-block_name = run.block_name
-input = run.input
 
-puts "Hello!"
-puts "We're up and running with block '#{block_name}'"
+data = run.input["data"]
+jq_expression = run.input["jq_expression"]
 
-puts "Received input:"
-p input
+File.write("data.json", data.to_json)
+puts `./jq '#{jq_expression}' "data.json"`
